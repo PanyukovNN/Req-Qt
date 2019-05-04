@@ -159,7 +159,7 @@ class Ui_MainWindow(object):
         self.addPersonButton.setFont(font)
         self.addPersonButton.setObjectName("addPersonButton")
         self.redCheckBox = QtWidgets.QCheckBox(self.centralwidget)
-        self.redCheckBox.setGeometry(QtCore.QRect(20, 730, 161, 23))
+        self.redCheckBox.setGeometry(QtCore.QRect(20, 730, 181, 23))
         font = QtGui.QFont()
         font.setPointSize(14)
         self.redCheckBox.setFont(font)

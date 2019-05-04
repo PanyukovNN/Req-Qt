@@ -1,5 +1,6 @@
 import sys, os, docx
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtWidgets import QMessageBox
 from req_ui import *
 from docx.shared import Pt
 
@@ -172,11 +173,10 @@ class MyWin(QtWidgets.QMainWindow):
 
                 doc.save('Требование ИЦ, ГИАЦ ' + str(count + 1) + " " + d["ФИО"][count].split()[0] + '.docx')
 
-            self.ui.label_6.setText("Успешно")
+            QMessageBox.information(myapp, "Удачно", "Файлы созданы успешно")
         except Exception as e:   
-            QMessageBox.warning(None, 'Warning', "Error: " + str(e))
-            self.ui.label_6.setText("Не удалось")
-            self.ui.personInput.setPlainText("Error: " + str(e))
+            # всплывающее окно с ошибкой
+            QMessageBox.warning(myapp, 'Ошибка', "Error: " + str(e))
 
     def writeFunc(self):
         # Присваиваем значения полей в переменную input, котрую затем запишем в файл
