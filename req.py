@@ -3,7 +3,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from req_ui import *
 from docx.shared import Pt
 
-with open("input.txt") as f:
+with open("input.txt", encoding = "utf-8") as f:
     input = f.read().split("\n")
 
 d = {}
@@ -13,6 +13,8 @@ d["Адрес"] = []
 for line in input:
     if line != "":
         title = line.split(": ",1)[0]
+        if "Файл" in title and title != "Файл ИЦ":
+            d["Файл"] = line.split(": ",1)[1]
         if title == "ФИО" or title == "Адрес":
             d[title].append(line.split(": ",1)[1])
         else:
@@ -60,10 +62,10 @@ class MyWin(QtWidgets.QMainWindow):
         for p in doc.paragraphs:
             for run in p.runs:
                 if "COUNTRY" in run.text: # населенный пункт
-                    run.text = run.text[0:-(len("COUNTRY"))] + d["Населенный пункт"] #+ "»"
+                    run.text = run.text[:-len("COUNTRY")-1] + d["Населенный пункт"] + "»"
 
                 if run.text == "DATE": # номер дела или материала
-                    run.text = d["Дата"] + " " * 16 + d["Номер материала/дела"] 
+                    run.text = d["Дата"] + " " * 16 + d["Номер материала/дела"]
 
                 if int(d["Материал/Дело[0/1]"]) == 0:
                     fab = "Фабула по материалу"
@@ -71,21 +73,21 @@ class MyWin(QtWidgets.QMainWindow):
                     fab = "Фабула по делу"
 
                 if "FABULA" in run.text:
-                    run.text = d[fab] + run.text[len(d[fab]):]
+                    run.text = d[fab] + run.text[len("FABULA"):]
 
 
-                if run.text == "FIO": # имя 
+                if run.text == "FIO": # имя
                     while len(p.runs) < len(d["ФИО"]) * 2: # добавляем runs
                         p.add_run()
-                    
-                    for i in range(len(p.runs)): 
+
+                    for i in range(len(p.runs)):
                         if i % 2 == 0: # сначала имя
                             p.runs[i].text = str(i//2 + 1) + ") " + d["ФИО"][i//2]
                             p.runs[i].bold = True
                         else: # затем адрес
                             p.runs[i].text = ", " + d["Адрес"][i//2]
                             if i < len(p.runs)-1 :
-                                p.runs[i].text += "\r\t"
+                                p.runs[i].text += "\t\n\t"
                         p.runs[i].font.name = "Times New Roman"
                         p.runs[i].font.size = Pt(14)
 
@@ -95,11 +97,11 @@ class MyWin(QtWidgets.QMainWindow):
         for count in range(len(d["ФИО"])):
             doc = docx.Document("Образцы" + os.sep + d["Файл ИЦ"] + ".docx") # файл ИЦ
             for p in doc.paragraphs:
-                for run in p.runs:    
+                for run in p.runs:
                     if "FAMILIA" in run.text:
                         run.text = d["ФИО"][count].split()[0]
                     if "IO" in run.text:
-                        run.text = d["ФИО"][count].split()[1] + " " + d["ФИО"][0].split()[2][:-1]
+                        run.text = d["ФИО"][count].split()[1] + " " + d["ФИО"][count].split()[2][:-1]
                     if "YEAR" in run.text:
                         run.text = d["ФИО"][count].split(",")[1]
                     if "ADRESS" in run.text:
@@ -163,5 +165,3 @@ if __name__ == "__main__":
 	myapp = MyWin()
 	myapp.show()
 	sys.exit(app.exec_())
-
-
