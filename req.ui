@@ -6,12 +6,12 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>591</width>
-    <height>685</height>
+    <width>619</width>
+    <height>846</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>ReqQt</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QLineEdit" name="dataEdit">
@@ -19,19 +19,32 @@
      <rect>
       <x>20</x>
       <y>100</y>
-      <width>171</width>
+      <width>181</width>
       <height>25</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string/>
     </property>
    </widget>
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>80</y>
+      <y>76</y>
       <width>101</width>
-      <height>17</height>
+      <height>21</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>14</pointsize>
+     </font>
     </property>
     <property name="text">
      <string>Дата:</string>
@@ -42,19 +55,33 @@
      <rect>
       <x>20</x>
       <y>160</y>
-      <width>551</width>
-      <height>111</height>
+      <width>581</width>
+      <height>161</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>14</pointsize>
+      <stylestrategy>PreferDefault</stylestrategy>
+     </font>
+    </property>
+    <property name="lineWidth">
+     <number>0</number>
     </property>
    </widget>
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>140</y>
-      <width>67</width>
-      <height>17</height>
+      <y>136</y>
+      <width>101</width>
+      <height>21</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>14</pointsize>
+     </font>
     </property>
     <property name="text">
      <string>Фабула:</string>
@@ -64,37 +91,67 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>290</y>
+      <y>336</y>
       <width>151</width>
-      <height>17</height>
+      <height>21</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
     <property name="text">
-     <string>Данные лиц:</string>
+     <string>ФИО лица:</string>
     </property>
    </widget>
    <widget class="QPlainTextEdit" name="personInput">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>310</y>
-      <width>551</width>
-      <height>281</height>
+      <y>530</y>
+      <width>581</width>
+      <height>191</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
+    <property name="readOnly">
+     <bool>true</bool>
     </property>
     <property name="plainText">
      <string>ФИО:
+Адрес:
+
+ФИО:
+Адрес:
+
+ФИО:
+Адрес:
+
+ФИО:
 Адрес:</string>
     </property>
    </widget>
    <widget class="QPushButton" name="readyButton">
     <property name="geometry">
      <rect>
-      <x>450</x>
-      <y>610</y>
-      <width>121</width>
+      <x>20</x>
+      <y>780</y>
+      <width>581</width>
       <height>31</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>14</pointsize>
+     </font>
     </property>
     <property name="text">
      <string>Готово</string>
@@ -105,19 +162,32 @@
      <rect>
       <x>210</x>
       <y>100</y>
-      <width>171</width>
+      <width>211</width>
       <height>25</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string/>
     </property>
    </widget>
    <widget class="QLabel" name="label_4">
     <property name="geometry">
      <rect>
       <x>210</x>
-      <y>80</y>
-      <width>101</width>
-      <height>17</height>
+      <y>79</y>
+      <width>161</width>
+      <height>21</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>14</pointsize>
+     </font>
     </property>
     <property name="text">
      <string>Номер уд/мп:</string>
@@ -127,10 +197,15 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>20</y>
-      <width>181</width>
+      <y>10</y>
+      <width>231</width>
       <height>23</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>14</pointsize>
+     </font>
     </property>
     <property name="acceptDrops">
      <bool>false</bool>
@@ -152,10 +227,15 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>50</y>
+      <y>40</y>
       <width>181</width>
       <height>23</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>14</pointsize>
+     </font>
     </property>
     <property name="text">
      <string>Уголовное дело</string>
@@ -164,37 +244,232 @@
    <widget class="QLabel" name="label_5">
     <property name="geometry">
      <rect>
-      <x>400</x>
-      <y>80</y>
-      <width>161</width>
-      <height>17</height>
+      <x>430</x>
+      <y>76</y>
+      <width>181</width>
+      <height>21</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
     <property name="text">
-     <string>Населенный пункит:</string>
+     <string>Населенный пункт:</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="placeEdit">
     <property name="geometry">
      <rect>
-      <x>400</x>
+      <x>430</x>
       <y>100</y>
       <width>171</width>
       <height>25</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
    </widget>
    <widget class="QLabel" name="label_6">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>610</y>
-      <width>291</width>
-      <height>17</height>
+      <x>240</x>
+      <y>730</y>
+      <width>161</width>
+      <height>21</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>14</pointsize>
+     </font>
     </property>
     <property name="text">
      <string/>
+    </property>
+   </widget>
+   <widget class="QDateEdit" name="bornEdit">
+    <property name="geometry">
+     <rect>
+      <x>450</x>
+      <y>360</y>
+      <width>151</width>
+      <height>26</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
+    <property name="readOnly">
+     <bool>false</bool>
+    </property>
+    <property name="displayFormat">
+     <string>dd.MM.yyyy</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="fioEdit">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>360</y>
+      <width>411</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_7">
+    <property name="geometry">
+     <rect>
+      <x>450</x>
+      <y>339</y>
+      <width>151</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Дата рождения:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_8">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>387</y>
+      <width>67</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Адрес:</string>
+    </property>
+   </widget>
+   <widget class="QPlainTextEdit" name="adressTextEdit">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>410</y>
+      <width>581</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
+    <property name="plainText">
+     <string>Республика Коми, Сыктывдинский район, с.Выльгорт, ул.Гагарина, д.20а</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="addPersonButton">
+    <property name="geometry">
+     <rect>
+      <x>480</x>
+      <y>480</y>
+      <width>121</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Добавить</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="redCheckBox">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>730</y>
+      <width>161</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Редактировать</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="delPersonButton">
+    <property name="geometry">
+     <rect>
+      <x>480</x>
+      <y>730</y>
+      <width>121</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Удалить</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="clearPersonButton">
+    <property name="geometry">
+     <rect>
+      <x>340</x>
+      <y>730</y>
+      <width>121</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Очистить</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="defaultButton">
+    <property name="geometry">
+     <rect>
+      <x>430</x>
+      <y>10</y>
+      <width>171</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>По умолчанию</string>
     </property>
    </widget>
   </widget>
@@ -203,7 +478,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>591</width>
+     <width>619</width>
      <height>22</height>
     </rect>
    </property>

@@ -7,10 +7,13 @@ with open("input.txt", encoding = "utf-8") as f:
     input = f.read().split("\n")
 
 d = {}
+personsArr = []
 
 def makeDict():
-    global d
+    global d, personsArr
     d = {}
+    personsArr = []
+
     d["ФИО"] = []
     d["Адрес"] = []
 
@@ -24,6 +27,13 @@ def makeDict():
             else:
                 d[title] = line.split(": ",1)[1]
 
+    # создаём массив лиц
+    for i in range(len(d["ФИО"])):
+        per = ""
+        per += "ФИО: " + d["ФИО"][i] + "\n"
+        per += "Адрес: " + d["Адрес"][i] + "\n"
+        personsArr.append(per)
+
 makeDict()
 
 class MyWin(QtWidgets.QMainWindow):
@@ -31,8 +41,29 @@ class MyWin(QtWidgets.QMainWindow):
         QtWidgets.QWidget.__init__(self, parent)
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-
+        
         # Заполняем поля сохраненными значениями
+        self.fillAllFields()
+
+        # Обработчик событий
+        self.ui.mpRadioButton.clicked.connect(self.changeFabula)
+        self.ui.udRadioButton.clicked.connect(self.changeFabula)
+        self.ui.redCheckBox.clicked.connect(self.allowEdit)
+        self.ui.readyButton.clicked.connect(self.reqFunc)
+        self.ui.addPersonButton.clicked.connect(self.addPerson)
+        self.ui.delPersonButton.clicked.connect(self.delPerson)
+        self.ui.clearPersonButton.clicked.connect(self.clearPerson)
+        self.ui.defaultButton.clicked.connect(self.defaultAll)
+
+    def allowEdit(self):
+        # Разрешаем редактирование введенных персональных данных
+        if self.ui.redCheckBox.isChecked():
+            self.ui.personInput.setReadOnly(False)
+        else:
+            self.ui.personInput.setReadOnly(True)
+
+    def fillAllFields(self):
+        # Заполняем поля сохраненными значениями    
         self.ui.dataEdit.setText(d["Дата"])
         self.ui.numberEdit.setText(d["Номер материала/дела"])
         self.ui.placeEdit.setText(d["Населенный пункт"])
@@ -42,15 +73,32 @@ class MyWin(QtWidgets.QMainWindow):
             self.ui.udRadioButton.setChecked(True)
         self.changeFabula()
 
-        self.ui.personInput.setPlainText("")
-        for i in range(len(d["ФИО"])):
-            self.ui.personInput.appendPlainText("ФИО: " + d["ФИО"][i])
-            self.ui.personInput.appendPlainText("Адрес: " + d["Адрес"][i] + "\n")
+        # выводим массив лиц в поле
+        self.ui.personInput.setPlainText("\n".join(personsArr))
 
-        # Обработчик событий
-        self.ui.mpRadioButton.clicked.connect(self.changeFabula)
-        self.ui.udRadioButton.clicked.connect(self.changeFabula)
-        self.ui.readyButton.clicked.connect(self.reqFunc)
+    def defaultAll(self):
+        with open("input (save).txt", encoding = "utf-8") as f:
+            t = f.read()
+        with open("input.txt", "w", encoding = "utf-8") as f:
+            f.write(t)
+        makeDict(); # заново формируем словарь и массив лиц
+        self.fillAllFields()
+
+    def clearPerson(self):
+    	self.ui.personInput.setPlainText("")
+
+    def delPerson(self):
+        # удаляем последнее лицо из массива лиц и выводим в поле
+        personsArr.pop()
+        self.ui.personInput.setPlainText("\n".join(personsArr))
+
+    def addPerson(self):
+        per = ""
+        per += "ФИО: " + self.ui.fioEdit.text() 
+        per += ", " + self.ui.bornEdit.text() + " г.р.\n"
+        per += "Адрес: проживающий(-ая) по адресу: " + self.ui.adressTextEdit.toPlainText() + ";\n"
+        personsArr.append(per)
+        self.ui.personInput.setPlainText("\n".join(personsArr))
 
     def changeFabula(self):
         if self.ui.mpRadioButton.isChecked():
@@ -60,7 +108,6 @@ class MyWin(QtWidgets.QMainWindow):
         self.ui.fabulaInput.setPlainText(d[fab])
 
     def reqFunc(self):
-        self.ui.label_6.setText("Успешно")
         self.writeFunc()
         makeDict()
 
@@ -119,6 +166,8 @@ class MyWin(QtWidgets.QMainWindow):
                         run.text =  " " * 6 + d["Дата"]
 
             doc.save('Требование ИЦ, ГИАЦ ' + str(count + 1) + " " + d["ФИО"][count].split()[0] + '.docx')
+
+        self.ui.label_6.setText("Успешно")
 
 
     def writeFunc(self):
