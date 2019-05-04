@@ -7,18 +7,24 @@ with open("input.txt", encoding = "utf-8") as f:
     input = f.read().split("\n")
 
 d = {}
-d["ФИО"] = []
-d["Адрес"] = []
 
-for line in input:
-    if line != "":
-        title = line.split(": ",1)[0]
-        if "Файл" in title and title != "Файл ИЦ":
-            d["Файл"] = line.split(": ",1)[1]
-        if title == "ФИО" or title == "Адрес":
-            d[title].append(line.split(": ",1)[1])
-        else:
-            d[title] = line.split(": ",1)[1]
+def makeDict():
+    global d
+    d = {}
+    d["ФИО"] = []
+    d["Адрес"] = []
+
+    for line in input:
+        if line != "":
+            title = line.split(": ",1)[0]
+            if "Файл" in title and title != "Файл ИЦ":
+                d["Файл"] = line.split(": ",1)[1]
+            if title == "ФИО" or title == "Адрес":
+                d[title].append(line.split(": ",1)[1])
+            else:
+                d[title] = line.split(": ",1)[1]
+
+makeDict()
 
 class MyWin(QtWidgets.QMainWindow):
     def __init__ (self, parent=None):
@@ -56,6 +62,7 @@ class MyWin(QtWidgets.QMainWindow):
     def reqFunc(self):
         self.ui.label_6.setText("Успешно")
         self.writeFunc()
+        makeDict()
 
         doc = docx.Document("Образцы" + os.sep + d["Файл"] + ".docx")
 
@@ -156,7 +163,7 @@ class MyWin(QtWidgets.QMainWindow):
                 input.insert(i, "")
 
         # отредактированную переменную записываем в файл
-        with open("input.txt", "w") as f:
+        with open("input.txt", "w", encoding = "utf-8") as f:
             f.write("\n".join(input))
 
 
