@@ -41,7 +41,7 @@ class MyWin(QtWidgets.QMainWindow):
         QtWidgets.QWidget.__init__(self, parent)
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-        
+
         # Заполняем поля сохраненными значениями
         self.fillAllFields()
 
@@ -63,7 +63,7 @@ class MyWin(QtWidgets.QMainWindow):
             self.ui.personInput.setReadOnly(True)
 
     def fillAllFields(self):
-        # Заполняем поля сохраненными значениями    
+        # Заполняем поля сохраненными значениями
         self.ui.dataEdit.setText(d["Дата"])
         self.ui.numberEdit.setText(d["Номер материала/дела"])
         self.ui.placeEdit.setText(d["Населенный пункт"])
@@ -77,7 +77,7 @@ class MyWin(QtWidgets.QMainWindow):
         self.ui.personInput.setPlainText("\n".join(personsArr))
 
     def defaultAll(self):
-        with open("input (save).txt", encoding = "utf-8") as f:
+        with open("input(save).txt", encoding = "utf-8") as f:
             t = f.read()
         with open("input.txt", "w", encoding = "utf-8") as f:
             f.write(t)
@@ -94,7 +94,7 @@ class MyWin(QtWidgets.QMainWindow):
 
     def addPerson(self):
         per = ""
-        per += "ФИО: " + self.ui.fioEdit.text() 
+        per += "ФИО: " + self.ui.fioEdit.text()
         per += ", " + self.ui.bornEdit.text() + " г.р.\n"
         per += "Адрес: проживающий(-ая) по адресу: " + self.ui.adressTextEdit.toPlainText() + ";\n"
         personsArr.append(per)
@@ -108,66 +108,69 @@ class MyWin(QtWidgets.QMainWindow):
         self.ui.fabulaInput.setPlainText(d[fab])
 
     def reqFunc(self):
-        self.writeFunc()
-        makeDict()
+        try:
+            self.writeFunc()
+            makeDict()
 
-        doc = docx.Document("Образцы" + os.sep + d["Файл"] + ".docx")
+            doc = docx.Document("Образцы" + os.sep + d["Файл"] + ".docx")
 
-        for p in doc.paragraphs:
-            for run in p.runs:
-                if "COUNTRY" in run.text: # населенный пункт
-                    run.text = run.text[:-len("COUNTRY")-1] + d["Населенный пункт"] + "»"
-
-                if run.text == "DATE": # номер дела или материала
-                    run.text = d["Дата"] + " " * 16 + d["Номер материала/дела"]
-
-                if int(d["Материал/Дело[0/1]"]) == 0:
-                    fab = "Фабула по материалу"
-                else:
-                    fab = "Фабула по делу"
-
-                if "FABULA" in run.text:
-                    run.text = d[fab] + run.text[len("FABULA"):]
-
-
-                if run.text == "FIO": # имя
-                    while len(p.runs) < len(d["ФИО"]) * 2: # добавляем runs
-                        p.add_run()
-
-                    for i in range(len(p.runs)):
-                        if i % 2 == 0: # сначала имя
-                            p.runs[i].text = str(i//2 + 1) + ") " + d["ФИО"][i//2]
-                            p.runs[i].bold = True
-                        else: # затем адрес
-                            p.runs[i].text = ", " + d["Адрес"][i//2]
-                            if i < len(p.runs)-1 :
-                                p.runs[i].text += "\t\n\t"
-                        p.runs[i].font.name = "Times New Roman"
-                        p.runs[i].font.size = Pt(14)
-
-        doc.save('Запросы готовые.docx')
-
-        # требования ИЦ, ГИАЦ
-        for count in range(len(d["ФИО"])):
-            doc = docx.Document("Образцы" + os.sep + d["Файл ИЦ"] + ".docx") # файл ИЦ
             for p in doc.paragraphs:
                 for run in p.runs:
-                    if "FAMILIA" in run.text:
-                        run.text = d["ФИО"][count].split()[0]
-                    if "IO" in run.text:
-                        run.text = d["ФИО"][count].split()[1] + " " + d["ФИО"][count].split()[2][:-1]
-                    if "YEAR" in run.text:
-                        run.text = d["ФИО"][count].split(",")[1]
-                    if "ADRESS" in run.text:
-                        run.text =  d["Адрес"][count].split(":")[1]
-                    if "NUMBER" in run.text:
-                        run.text =  "№" + d["Номер материала/дела"]
-                    if "CURRENT" in run.text:
-                        run.text =  " " * 6 + d["Дата"]
+                    if "COUNTRY" in run.text: # населенный пункт
+                        run.text = run.text[:-len("COUNTRY")-1] + d["Населенный пункт"] + "»"
 
-            doc.save('Требование ИЦ, ГИАЦ ' + str(count + 1) + " " + d["ФИО"][count].split()[0] + '.docx')
+                    if run.text == "DATE": # номер дела или материала
+                        run.text = d["Дата"] + " " * 16 + d["Номер материала/дела"]
 
-        self.ui.label_6.setText("Успешно")
+                    if int(d["Материал/Дело[0/1]"]) == 0:
+                        fab = "Фабула по материалу"
+                    else:
+                        fab = "Фабула по делу"
+
+                    if "FABULA" in run.text:
+                        run.text = d[fab] + run.text[len("FABULA"):]
+
+
+                    if run.text == "FIO": # имя
+                        while len(p.runs) < len(d["ФИО"]) * 2: # добавляем runs
+                            p.add_run()
+
+                        for i in range(len(p.runs)):
+                            if i % 2 == 0: # сначала имя
+                                p.runs[i].text = str(i//2 + 1) + ") " + d["ФИО"][i//2]
+                                p.runs[i].bold = True
+                            else: # затем адрес
+                                p.runs[i].text = ", " + d["Адрес"][i//2]
+                                if i < len(p.runs)-1 :
+                                    p.runs[i].text += "\t\n\t"
+                            p.runs[i].font.name = "Times New Roman"
+                            p.runs[i].font.size = Pt(14)
+
+            doc.save('Запросы готовые.docx')
+
+            # требования ИЦ, ГИАЦ
+            for count in range(len(d["ФИО"])):
+                doc = docx.Document("Образцы" + os.sep + d["Файл ИЦ"] + ".docx") # файл ИЦ
+                for p in doc.paragraphs:
+                    for run in p.runs:
+                        if "FAMILIA" in run.text:
+                            run.text = d["ФИО"][count].split()[0]
+                        if "IO" in run.text:
+                            run.text = d["ФИО"][count].split()[1] + " " + d["ФИО"][count].split()[2][:-1]
+                        if "YEAR" in run.text:
+                            run.text = d["ФИО"][count].split(",")[1]
+                        if "ADRESS" in run.text:
+                            run.text =  d["Адрес"][count].split(":")[1]
+                        if "NUMBER" in run.text:
+                            run.text =  "№" + d["Номер материала/дела"]
+                        if "CURRENT" in run.text:
+                            run.text =  " " * 6 + d["Дата"]
+
+                doc.save('Требование ИЦ, ГИАЦ ' + str(count + 1) + " " + d["ФИО"][count].split()[0] + '.docx')
+
+            self.ui.label_6.setText("Успешно")
+        except Exception as e:
+            print(e)
 
 
     def writeFunc(self):
