@@ -42,7 +42,7 @@ class MyWin(QtWidgets.QMainWindow):
         QtWidgets.QWidget.__init__(self, parent)
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-        
+
         # Заполняем поля сохраненными значениями
         self.fillAllFields()
 
@@ -64,7 +64,7 @@ class MyWin(QtWidgets.QMainWindow):
             self.ui.personInput.setReadOnly(True)
 
     def fillAllFields(self):
-        # Заполняем поля сохраненными значениями    
+        # Заполняем поля сохраненными значениями
         self.ui.dataEdit.setText(d["Дата"])
         self.ui.numberEdit.setText(d["Номер материала/дела"])
         self.ui.placeEdit.setText(d["Населенный пункт"])
@@ -100,7 +100,7 @@ class MyWin(QtWidgets.QMainWindow):
 
     def addPerson(self):
         per = ""
-        per += "ФИО: " + self.ui.fioEdit.text() 
+        per += "ФИО: " + self.ui.fioEdit.text()
         per += ", " + self.ui.bornEdit.text() + " г.р.\n"
         per += "Адрес: проживающий(-ая) по адресу: " + self.ui.adressTextEdit.toPlainText() + ";\n"
         personsArr.append(per)
@@ -117,9 +117,7 @@ class MyWin(QtWidgets.QMainWindow):
         try:
             self.writeFunc()
             makeDict()
-
             doc = docx.Document("Образцы" + os.sep + d["Файл"] + ".docx")
-
             for p in doc.paragraphs:
                 for run in p.runs:
                     if "COUNTRY" in run.text: # населенный пункт
@@ -178,7 +176,6 @@ class MyWin(QtWidgets.QMainWindow):
         except Exception as e:
             self.ui.label_6.setText("Не удалось")    
             print(str(e))
-
 
     def writeFunc(self):
         # Присваиваем значения полей в переменную input, котрую затем запишем в файл
