@@ -11,7 +11,7 @@ def makeDict():
     global d, personsArr, input
     with open("input.txt", encoding = "utf-8") as f:
         input = f.read().split("\n")
-    
+
     d = {}
     personsArr = []
 
@@ -86,7 +86,7 @@ class MyWin(QtWidgets.QMainWindow):
         self.fillAllFields()
 
     def clearPerson(self):
-        global personsArr 
+        global personsArr
         personsArr = []
         self.ui.personInput.setPlainText("")
 
@@ -173,10 +173,10 @@ class MyWin(QtWidgets.QMainWindow):
                 doc.save('Требование ИЦ, ГИАЦ ' + str(count + 1) + " " + d["ФИО"][count].split()[0] + '.docx')
 
             self.ui.label_6.setText("Успешно")
-        except Exception as e:
-            self.ui.label_6.setText("Не удалось")    
-            QMessageBox.warning(None, 'Warning', str(e))
-            print(str(e))
+        except Exception as e:   
+            QMessageBox.warning(None, 'Warning', "Error: " + str(e))
+            self.ui.label_6.setText("Не удалось")
+            self.ui.personInput.setPlainText("Error: " + str(e))
 
     def writeFunc(self):
         # Присваиваем значения полей в переменную input, котрую затем запишем в файл
