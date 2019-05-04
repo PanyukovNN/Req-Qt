@@ -175,6 +175,7 @@ class MyWin(QtWidgets.QMainWindow):
             self.ui.label_6.setText("Успешно")
         except Exception as e:
             self.ui.label_6.setText("Не удалось")    
+            QMessageBox.warning(None, 'Warning', str(e))
             print(str(e))
 
     def writeFunc(self):
