@@ -11,7 +11,12 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(619, 846)
+        MainWindow.resize(624, 846)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(MainWindow.sizePolicy().hasHeightForWidth())
+        MainWindow.setSizePolicy(sizePolicy)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.dataEdit = QtWidgets.QLineEdit(self.centralwidget)
@@ -54,6 +59,7 @@ class Ui_MainWindow(object):
         font.setPointSize(14)
         self.personInput.setFont(font)
         self.personInput.setReadOnly(True)
+        self.personInput.setPlainText("")
         self.personInput.setObjectName("personInput")
         self.readyButton = QtWidgets.QPushButton(self.centralwidget)
         self.readyButton.setGeometry(QtCore.QRect(20, 780, 581, 31))
@@ -103,7 +109,7 @@ class Ui_MainWindow(object):
         self.placeEdit.setFont(font)
         self.placeEdit.setObjectName("placeEdit")
         self.label_6 = QtWidgets.QLabel(self.centralwidget)
-        self.label_6.setGeometry(QtCore.QRect(240, 730, 161, 21))
+        self.label_6.setGeometry(QtCore.QRect(190, 730, 121, 21))
         font = QtGui.QFont()
         font.setPointSize(14)
         self.label_6.setFont(font)
@@ -115,6 +121,7 @@ class Ui_MainWindow(object):
         font.setPointSize(14)
         self.bornEdit.setFont(font)
         self.bornEdit.setReadOnly(False)
+        self.bornEdit.setDate(QtCore.QDate(2000, 1, 1))
         self.bornEdit.setObjectName("bornEdit")
         self.fioEdit = QtWidgets.QLineEdit(self.centralwidget)
         self.fioEdit.setGeometry(QtCore.QRect(20, 360, 411, 25))
@@ -136,6 +143,11 @@ class Ui_MainWindow(object):
         self.label_8.setObjectName("label_8")
         self.adressTextEdit = QtWidgets.QPlainTextEdit(self.centralwidget)
         self.adressTextEdit.setGeometry(QtCore.QRect(20, 410, 581, 61))
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.adressTextEdit.sizePolicy().hasHeightForWidth())
+        self.adressTextEdit.setSizePolicy(sizePolicy)
         font = QtGui.QFont()
         font.setPointSize(14)
         self.adressTextEdit.setFont(font)
@@ -172,7 +184,7 @@ class Ui_MainWindow(object):
         self.defaultButton.setObjectName("defaultButton")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 619, 22))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 624, 22))
         self.menubar.setObjectName("menubar")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
@@ -188,17 +200,6 @@ class Ui_MainWindow(object):
         self.label.setText(_translate("MainWindow", "Дата:"))
         self.label_2.setText(_translate("MainWindow", "Фабула:"))
         self.label_3.setText(_translate("MainWindow", "ФИО лица:"))
-        self.personInput.setPlainText(_translate("MainWindow", "ФИО:\n"
-"Адрес:\n"
-"\n"
-"ФИО:\n"
-"Адрес:\n"
-"\n"
-"ФИО:\n"
-"Адрес:\n"
-"\n"
-"ФИО:\n"
-"Адрес:"))
         self.readyButton.setText(_translate("MainWindow", "Готово"))
         self.label_4.setText(_translate("MainWindow", "Номер уд/мп:"))
         self.mpRadioButton.setText(_translate("MainWindow", "Материал проверки"))
@@ -207,7 +208,7 @@ class Ui_MainWindow(object):
         self.bornEdit.setDisplayFormat(_translate("MainWindow", "dd.MM.yyyy"))
         self.label_7.setText(_translate("MainWindow", "Дата рождения:"))
         self.label_8.setText(_translate("MainWindow", "Адрес:"))
-        self.adressTextEdit.setPlainText(_translate("MainWindow", "Республика Коми, Сыктывдинский район, с.Выльгорт, ул.Гагарина, д.20а"))
+        self.adressTextEdit.setPlainText(_translate("MainWindow", "Республика Коми, Сыктывдинский район,"))
         self.addPersonButton.setText(_translate("MainWindow", "Добавить"))
         self.redCheckBox.setText(_translate("MainWindow", "Редактировать"))
         self.delPersonButton.setText(_translate("MainWindow", "Удалить"))

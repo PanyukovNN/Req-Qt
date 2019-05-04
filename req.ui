@@ -6,9 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>619</width>
+    <width>624</width>
     <height>846</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
   </property>
   <property name="windowTitle">
    <string>ReqQt</string>
@@ -126,17 +132,7 @@
      <bool>true</bool>
     </property>
     <property name="plainText">
-     <string>ФИО:
-Адрес:
-
-ФИО:
-Адрес:
-
-ФИО:
-Адрес:
-
-ФИО:
-Адрес:</string>
+     <string/>
     </property>
    </widget>
    <widget class="QPushButton" name="readyButton">
@@ -277,9 +273,9 @@
    <widget class="QLabel" name="label_6">
     <property name="geometry">
      <rect>
-      <x>240</x>
+      <x>190</x>
       <y>730</y>
-      <width>161</width>
+      <width>121</width>
       <height>21</height>
      </rect>
     </property>
@@ -311,6 +307,13 @@
     </property>
     <property name="displayFormat">
      <string>dd.MM.yyyy</string>
+    </property>
+    <property name="date">
+     <date>
+      <year>2000</year>
+      <month>1</month>
+      <day>1</day>
+     </date>
     </property>
    </widget>
    <widget class="QLineEdit" name="fioEdit">
@@ -373,13 +376,19 @@
       <height>61</height>
      </rect>
     </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
     <property name="font">
      <font>
       <pointsize>14</pointsize>
      </font>
     </property>
     <property name="plainText">
-     <string>Республика Коми, Сыктывдинский район, с.Выльгорт, ул.Гагарина, д.20а</string>
+     <string>Республика Коми, Сыктывдинский район,</string>
     </property>
    </widget>
    <widget class="QPushButton" name="addPersonButton">
@@ -478,7 +487,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>619</width>
+     <width>624</width>
      <height>22</height>
     </rect>
    </property>
