@@ -10,7 +10,7 @@ input = []
 
 def makeDict():
     global d, personsArr, input
-    with open("input.txt", encoding = "utf-8") as f:
+    with open("bin" + os.sep + "input.txt", encoding = "utf-8") as f:
         input = f.read().split("\n")
 
     d = {}
@@ -36,13 +36,18 @@ def makeDict():
         per += "Адрес: " + d["Адрес"][i] + "\n"
         personsArr.append(per)
 
-makeDict()
 
 class MyWin(QtWidgets.QMainWindow):
     def __init__ (self, parent=None):
         QtWidgets.QWidget.__init__(self, parent)
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+
+        # считываем файл input.txt
+        try:
+            makeDict()
+        except Exception as e:
+            QMessageBox.warning(myapp, 'Ошибка', "Error: " + str(e))
 
         # Заполняем поля сохраненными значениями
         self.fillAllFields()
@@ -56,6 +61,15 @@ class MyWin(QtWidgets.QMainWindow):
         self.ui.delPersonButton.clicked.connect(self.delPerson)
         self.ui.clearPersonButton.clicked.connect(self.clearPerson)
         self.ui.defaultButton.clicked.connect(self.defaultAll)
+
+    def writePersonInput(self):
+        t = personsArr[:]
+        out = ""
+        for el in t:
+            el = el.replace("ФИО: ", "").split("\nАдрес:")
+            el = str(el[0] + "," + el[1])
+            out += el + "\n"
+        self.ui.personInput.setPlainText(out)
 
     def allowEdit(self):
         # Разрешаем редактирование введенных персональных данных
@@ -76,17 +90,21 @@ class MyWin(QtWidgets.QMainWindow):
         self.changeFabula()
 
         # выводим массив лиц в поле
-        self.ui.personInput.setPlainText("\n".join(personsArr))
+        self.writePersonInput()
 
     def defaultAll(self):
-        with open("input(save).txt", encoding = "utf-8") as f:
-            t = f.read()
-        with open("input.txt", "w", encoding = "utf-8") as f:
-            f.write(t)
-        makeDict(); # заново формируем словарь и массив лиц
+        try:
+            with open("bin" + os.sep + "default.txt", encoding = "utf-8") as f:
+                t = f.read()
+            with open("bin" + os.sep + "input.txt", "w", encoding = "utf-8") as f:
+                f.write(t)
+            makeDict(); # заново формируем словарь и массив лиц
+        except Exception as e:
+            QMessageBox.warning(myapp, 'Ошибка', "Error: " + str(e))
         self.fillAllFields()
 
     def clearPerson(self):
+        # очищает поле и массив лиц
         global personsArr
         personsArr = []
         self.ui.personInput.setPlainText("")
@@ -97,15 +115,16 @@ class MyWin(QtWidgets.QMainWindow):
             personsArr.pop()
         except Exception:
             print("personsArr is empty")
-        self.ui.personInput.setPlainText("\n".join(personsArr))
+        self.writePersonInput()
 
     def addPerson(self):
+        # добавляет лицо в массив и выводит в специальное поле
         per = ""
         per += "ФИО: " + self.ui.fioEdit.text()
         per += ", " + self.ui.bornEdit.text() + " г.р.\n"
         per += "Адрес: проживающий(-ая) по адресу: " + self.ui.adressTextEdit.toPlainText() + ";\n"
         personsArr.append(per)
-        self.ui.personInput.setPlainText("\n".join(personsArr))
+        self.writePersonInput()
 
     def changeFabula(self):
         if self.ui.mpRadioButton.isChecked():
@@ -118,7 +137,7 @@ class MyWin(QtWidgets.QMainWindow):
         try:
             self.writeFunc()
             makeDict()
-            doc = docx.Document("Образцы" + os.sep + d["Файл"] + ".docx")
+            doc = docx.Document("bin" + os.sep + d["Файл"] + ".docx")
             for p in doc.paragraphs:
                 for run in p.runs:
                     if "COUNTRY" in run.text: # населенный пункт
@@ -155,7 +174,7 @@ class MyWin(QtWidgets.QMainWindow):
 
             # требования ИЦ, ГИАЦ
             for count in range(len(d["ФИО"])):
-                doc = docx.Document("Образцы" + os.sep + d["Файл ИЦ"] + ".docx") # файл ИЦ
+                doc = docx.Document("bin" + os.sep + d["Файл ИЦ"] + ".docx") # файл ИЦ
                 for p in doc.paragraphs:
                     for run in p.runs:
                         if "FAMILIA" in run.text:
@@ -173,8 +192,8 @@ class MyWin(QtWidgets.QMainWindow):
 
                 doc.save('Требование ИЦ, ГИАЦ ' + str(count + 1) + " " + d["ФИО"][count].split()[0] + '.docx')
 
-            QMessageBox.information(myapp, "Удачно", "Файлы созданы успешно")
-        except Exception as e:   
+            QMessageBox.information(myapp, "Done", "Файлы созданы успешно")
+        except Exception as e:
             # всплывающее окно с ошибкой
             QMessageBox.warning(myapp, 'Ошибка', "Error: " + str(e))
 
@@ -208,10 +227,8 @@ class MyWin(QtWidgets.QMainWindow):
             input.remove("")
 
         # вписываем в конец input содержимое поля personInput
-        persons = self.ui.personInput.toPlainText().split("\n")
-        for line in persons:
-            if line != "":
-                input.append(line)
+        for person in personsArr:
+            input.append(person)
 
         # добавляем в input пустые элементы через каждую строку, чтобы корректно срабатывало последующее считывание из файла
         tInput = input
@@ -220,9 +237,8 @@ class MyWin(QtWidgets.QMainWindow):
                 input.insert(i, "")
 
         # отредактированную переменную записываем в файл
-        with open("input.txt", "w", encoding = "utf-8") as f:
+        with open("bin" + os.sep + "input.txt", "w", encoding = "utf-8") as f:
             f.write("\n".join(input))
-
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
