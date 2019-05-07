@@ -65,10 +65,12 @@ class MyWin(QtWidgets.QMainWindow):
     def writePersonInput(self):
         t = personsArr[:]
         out = ""
+        count = 0
         for el in t:
+            count += 1
             el = el.replace("ФИО: ", "").split("\nАдрес:")
             el = str(el[0] + "," + el[1])
-            out += el + "\n"
+            out += str(count) + ") " + el + "\n"
         self.ui.personInput.setPlainText(out)
 
     def allowEdit(self):
@@ -228,7 +230,7 @@ class MyWin(QtWidgets.QMainWindow):
 
         # вписываем в конец input содержимое поля personInput
         for person in personsArr:
-            input.append(person)
+            input.append(person.replace("Адрес", "\nАдрес"))
 
         # добавляем в input пустые элементы через каждую строку, чтобы корректно срабатывало последующее считывание из файла
         tInput = input
