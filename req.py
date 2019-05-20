@@ -94,6 +94,11 @@ class MyWin(QtWidgets.QMainWindow):
         # выводим массив лиц в поле
         self.writePersonInput()
 
+        # данные следователя (знаки *-* нужны для корректного отображения считывания строки)
+        self.ui.positionInput.setPlainText(d["Должность"].replace("*-*", "\n"))
+        self.ui.rankEdit.setText(d["Звание"])
+        self.ui.sledNameEdit.setText(d["Имя следователя"])
+
     def defaultAll(self):
         try:
             with open("bin" + os.sep + "default.txt", encoding = "utf-8") as f:
@@ -140,13 +145,27 @@ class MyWin(QtWidgets.QMainWindow):
             self.writeFunc()
             makeDict()
             doc = docx.Document("bin" + os.sep + d["Файл"] + ".docx")
+
+            # работа с таблицами (нужны поля Date и Country)
+            for table in doc.tables:
+                for row in table.rows:
+                    for cell in row.cells:
+                        for p in cell.paragraphs:
+                            for run in p.runs:
+                                if run.text == "DATE": # номер дела или материала
+                                    run.text = d["Дата"] + " " * 16 + d["Номер материала/дела"]
+
+                                if "COUNTRY" in run.text: # населенный пункт
+                                    run.text = run.text[:-len("COUNTRY")-1] + d["Населенный пункт"] + "»"
+
+
             for p in doc.paragraphs:
                 for run in p.runs:
-                    if "COUNTRY" in run.text: # населенный пункт
-                        run.text = run.text[:-len("COUNTRY")-1] + d["Населенный пункт"] + "»"
-
                     if run.text == "DATE": # номер дела или материала
                         run.text = d["Дата"] + " " * 16 + d["Номер материала/дела"]
+
+                    if "COUNTRY" in run.text: # населенный пункт
+                        run.text = run.text[:-len("COUNTRY")-1] + d["Населенный пункт"] + "»"
 
                     if int(d["Материал/Дело[0/1]"]) == 0:
                         fab = "Фабула по материалу"
@@ -172,6 +191,13 @@ class MyWin(QtWidgets.QMainWindow):
                             p.runs[i].font.name = "Times New Roman"
                             p.runs[i].font.size = Pt(14)
 
+                    if "POSITION" in run.text:
+                        run.text = d["Должность"].replace("*-*", "\n")
+                    if "RANK" in run.text:
+                        run.text = d["Звание"]
+                    if "NAME" in run.text:
+                        run.text = d["Имя следователя"]
+
             doc.save('Запросы готовые.docx')
 
             # требования ИЦ, ГИАЦ
@@ -181,7 +207,7 @@ class MyWin(QtWidgets.QMainWindow):
                     for run in p.runs:
                         if "FAMILIA" in run.text:
                             run.text = d["ФИО"][count].split()[0]
-                        if "IO" in run.text:
+                        if "NAMEMIDDLE" in run.text:
                             run.text = d["ФИО"][count].split()[1] + " " + d["ФИО"][count].split()[2][:-1]
                         if "YEAR" in run.text:
                             run.text = d["ФИО"][count].split(",")[1]
@@ -191,6 +217,12 @@ class MyWin(QtWidgets.QMainWindow):
                             run.text =  "№" + d["Номер материала/дела"]
                         if "CURRENT" in run.text:
                             run.text =  " " * 6 + d["Дата"]
+                        if "POSITION" in run.text:
+                            run.text = d["Должность"].replace("*-*", " ")
+                        if "RANK" in run.text:
+                            run.text = d["Звание"]
+                        if "NAME" in run.text:
+                            run.text = d["Имя следователя"]
 
                 doc.save('Требование ИЦ, ГИАЦ ' + str(count + 1) + " " + d["ФИО"][count].split()[0] + '.docx')
 
@@ -223,6 +255,15 @@ class MyWin(QtWidgets.QMainWindow):
 
                 if title == "Населенный пункт":
                     input[input.index(line)] = title + ": " + self.ui.placeEdit.text()
+
+                if title == "Должность":
+                	input[input.index(line)] = title + ": " + self.ui.positionInput.toPlainText().replace("\n", "*-*")
+
+                if title == "Звание":
+                	input[input.index(line)] = title + ": " + self.ui.rankEdit.text()
+
+                if title == "Имя следователя":
+                	input[input.index(line)] = title + ": " + self.ui.sledNameEdit.text()
 
         # очищаем input от пустых элементов
         while "" in input:
