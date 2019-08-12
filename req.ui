@@ -391,24 +391,6 @@
      <string>Добавить</string>
     </property>
    </widget>
-   <widget class="QCheckBox" name="redCheckBox">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>620</y>
-      <width>181</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>12</pointsize>
-     </font>
-    </property>
-    <property name="text">
-     <string>Редактировать</string>
-    </property>
-   </widget>
    <widget class="QPushButton" name="delPersonButton">
     <property name="geometry">
      <rect>

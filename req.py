@@ -187,7 +187,7 @@ class MyWin(QtWidgets.QMainWindow):
                             else: # затем адрес
                                 p.runs[i].text = ", " + d["Адрес"][i//2]
                                 if i < len(p.runs)-1 :
-                                    p.runs[i].text += "\t\n\t"
+                                    p.runs[i].text += "\r\n"
                             p.runs[i].font.name = "Times New Roman"
                             p.runs[i].font.size = Pt(14)
 
@@ -218,7 +218,7 @@ class MyWin(QtWidgets.QMainWindow):
                         if "CURRENT" in run.text:
                             run.text =  " " * 6 + d["Дата"]
                         if "POSITION" in run.text:
-                            run.text = d["Должность"].replace("*-*", " ")
+                            run.text = d["Должность"].replace("*-*", "\r\n")
                         if "RANK" in run.text:
                             run.text = d["Звание"]
                         if "NAME" in run.text:

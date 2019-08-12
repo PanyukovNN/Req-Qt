@@ -2,11 +2,12 @@
 
 # Form implementation generated from reading ui file 'req.ui'
 #
-# Created by: PyQt5 UI code generator 5.10.1
+# Created by: PyQt5 UI code generator 5.12.1
 #
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -151,12 +152,6 @@ class Ui_MainWindow(object):
         font.setPointSize(12)
         self.addPersonButton.setFont(font)
         self.addPersonButton.setObjectName("addPersonButton")
-        self.redCheckBox = QtWidgets.QCheckBox(self.centralwidget)
-        self.redCheckBox.setGeometry(QtCore.QRect(20, 620, 181, 23))
-        font = QtGui.QFont()
-        font.setPointSize(12)
-        self.redCheckBox.setFont(font)
-        self.redCheckBox.setObjectName("redCheckBox")
         self.delPersonButton = QtWidgets.QPushButton(self.centralwidget)
         self.delPersonButton.setGeometry(QtCore.QRect(480, 620, 121, 31))
         font = QtGui.QFont()
@@ -247,7 +242,6 @@ class Ui_MainWindow(object):
         self.label_8.setText(_translate("MainWindow", "Адрес:"))
         self.adressTextEdit.setPlainText(_translate("MainWindow", "Республика Коми, Сыктывдинский район,"))
         self.addPersonButton.setText(_translate("MainWindow", "Добавить"))
-        self.redCheckBox.setText(_translate("MainWindow", "Редактировать"))
         self.delPersonButton.setText(_translate("MainWindow", "Удалить"))
         self.clearPersonButton.setText(_translate("MainWindow", "Очистить"))
         self.defaultButton.setText(_translate("MainWindow", "По умолчанию"))
@@ -255,4 +249,5 @@ class Ui_MainWindow(object):
         self.label_10.setText(_translate("MainWindow", "Должность:"))
         self.label_11.setText(_translate("MainWindow", "Звание:"))
         self.label_12.setText(_translate("MainWindow", "ФИО следователя:"))
+
 
