@@ -3,6 +3,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMessageBox
 from req_ui import *
 from docx.shared import Pt
+from docx.enum.text import WD_ALIGN_PARAGRAPH
 
 d = {}
 personsArr = []
@@ -55,7 +56,6 @@ class MyWin(QtWidgets.QMainWindow):
         # Обработчик событий
         self.ui.mpRadioButton.clicked.connect(self.changeFabula)
         self.ui.udRadioButton.clicked.connect(self.changeFabula)
-        self.ui.redCheckBox.clicked.connect(self.allowEdit)
         self.ui.readyButton.clicked.connect(self.reqFunc)
         self.ui.addPersonButton.clicked.connect(self.addPerson)
         self.ui.delPersonButton.clicked.connect(self.delPerson)
@@ -72,13 +72,6 @@ class MyWin(QtWidgets.QMainWindow):
             el = str(el[0] + "," + el[1])
             out += str(count) + ") " + el + "\n"
         self.ui.personInput.setPlainText(out)
-
-    def allowEdit(self):
-        # Разрешаем редактирование введенных персональных данных
-        if self.ui.redCheckBox.isChecked():
-            self.ui.personInput.setReadOnly(False)
-        else:
-            self.ui.personInput.setReadOnly(True)
 
     def fillAllFields(self):
         # Заполняем поля сохраненными значениями
@@ -158,7 +151,6 @@ class MyWin(QtWidgets.QMainWindow):
                                 if "COUNTRY" in run.text: # населенный пункт
                                     run.text = run.text[:-len("COUNTRY")-1] + d["Населенный пункт"] + "»"
 
-
             for p in doc.paragraphs:
                 for run in p.runs:
                     if run.text == "DATE": # номер дела или материала
@@ -175,21 +167,24 @@ class MyWin(QtWidgets.QMainWindow):
                     if "FABULA" in run.text:
                         run.text = d[fab] + run.text[len("FABULA"):]
 
-
                     if run.text == "FIO": # имя
-                        while len(p.runs) < len(d["ФИО"]) * 2: # добавляем runs
-                            p.add_run()
-
-                        for i in range(len(p.runs)):
-                            if i % 2 == 0: # сначала имя
-                                p.runs[i].text = str(i//2 + 1) + ") " + d["ФИО"][i//2]
-                                p.runs[i].bold = True
-                            else: # затем адрес
-                                p.runs[i].text = ", " + d["Адрес"][i//2]
-                                if i < len(p.runs)-1 :
-                                    p.runs[i].text += "\r\n"
-                            p.runs[i].font.name = "Times New Roman"
-                            p.runs[i].font.size = Pt(14)
+                        i = 0
+                        while i < len(d["ФИО"]): # добавляем параграфы
+                            i += 1
+                            if i == len(d["ФИО"]):
+                                newParagraph = p
+                            else:
+                                newParagraph = p.insert_paragraph_before()
+                            newParagraph.add_run()
+                            newParagraph.runs[0].text = "\t" + str(i//2 + 1) + ") " + d["ФИО"][i//2]
+                            newParagraph.runs[0].bold = True
+                            newParagraph.runs[0].font.name = "Times New Roman"
+                            newParagraph.runs[0].font.size = Pt(14)
+                            newParagraph.add_run()
+                            newParagraph.runs[1].text = ", " + d["Адрес"][i//2]
+                            newParagraph.runs[1].font.name = "Times New Roman"
+                            newParagraph.runs[1].font.size = Pt(14)
+                            newParagraph.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
 
                     if "POSITION" in run.text:
                         run.text = d["Должность"].replace("*-*", "\n")
@@ -218,7 +213,7 @@ class MyWin(QtWidgets.QMainWindow):
                         if "CURRENT" in run.text:
                             run.text =  " " * 6 + d["Дата"]
                         if "POSITION" in run.text:
-                            run.text = d["Должность"].replace("*-*", "\r\n")
+                            run.text = d["Должность"].replace("*-*", "\n")
                         if "RANK" in run.text:
                             run.text = d["Звание"]
                         if "NAME" in run.text:

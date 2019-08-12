@@ -1,0 +1,24 @@
+([('req.exe',
+   'C:\\Users\\Николай\\Desktop\\prog\\Python\\GUI\\Req '
+   'Qt\\build\\req\\req.exe',
+   'EXECUTABLE'),
+  ('req.exe.manifest',
+   'C:\\Users\\Николай\\Desktop\\prog\\Python\\GUI\\Req '
+   'Qt\\build\\req\\req.exe.manifest',
+   'BINARY'),
+  ('python37.dll', 'c:\\python37\\python37.dll', 'BINARY'),
+  ('VCRUNTIME140.dll', 'c:\\python37\\VCRUNTIME140.dll', 'BINARY'),
+  ('_ssl', 'c:\\python37\\DLLs\\_ssl.pyd', 'EXTENSION'),
+  ('pyexpat', 'c:\\python37\\DLLs\\pyexpat.pyd', 'EXTENSION'),
+  ('_hashlib', 'c:\\python37\\DLLs\\_hashlib.pyd', 'EXTENSION'),
+  ('_lzma', 'c:\\python37\\DLLs\\_lzma.pyd', 'EXTENSION'),
+  ('_socket', 'c:\\python37\\DLLs\\_socket.pyd', 'EXTENSION'),
+  ('unicodedata', 'c:\\python37\\DLLs\\unicodedata.pyd', 'EXTENSION'),
+  ('select', 'c:\\python37\\DLLs\\select.pyd', 'EXTENSION'),
+  ('_bz2', 'c:\\python37\\DLLs\\_bz2.pyd', 'EXTENSION'),
+  ('libssl-1_1.dll', 'c:\\python37\\DLLs\\libssl-1_1.dll', 'BINARY'),
+  ('libcrypto-1_1.dll', 'c:\\python37\\DLLs\\libcrypto-1_1.dll', 'BINARY'),
+  ('base_library.zip',
+   'C:\\Users\\Николай\\Desktop\\prog\\Python\\GUI\\Req '
+   'Qt\\build\\req\\base_library.zip',
+   'DATA')],)
