@@ -170,21 +170,21 @@ class MyWin(QtWidgets.QMainWindow):
                     if run.text == "FIO": # имя
                         i = 0
                         while i < len(d["ФИО"]): # добавляем параграфы
-                            i += 1
-                            if i == len(d["ФИО"]):
+                            if i == len(d["ФИО"]) - 1:
                                 newParagraph = p
                             else:
                                 newParagraph = p.insert_paragraph_before()
                             newParagraph.add_run()
-                            newParagraph.runs[0].text = "\t" + str(i//2 + 1) + ") " + d["ФИО"][i//2]
+                            newParagraph.runs[0].text = "\t" + str(i + 1) + ") " + d["ФИО"][i]
                             newParagraph.runs[0].bold = True
                             newParagraph.runs[0].font.name = "Times New Roman"
                             newParagraph.runs[0].font.size = Pt(14)
                             newParagraph.add_run()
-                            newParagraph.runs[1].text = ", " + d["Адрес"][i//2]
+                            newParagraph.runs[1].text = ", " + d["Адрес"][i]
                             newParagraph.runs[1].font.name = "Times New Roman"
                             newParagraph.runs[1].font.size = Pt(14)
                             newParagraph.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
+                            i += 1
 
                     if "POSITION" in run.text:
                         run.text = d["Должность"].replace("*-*", "\n")
